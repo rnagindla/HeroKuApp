@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using HeroKuApp.page;
 using OpenQA.Selenium.Remote;
+using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
 
 namespace HeroKuApp.test;
 
@@ -16,8 +18,26 @@ public class HeroKuAppTest
     private WelcomePage welcomePage;
     private AddRemoveElementsPage addRemoveElementsPage;
     private Boolean runLocal;
+    private ExtentReports extentReport;
+    private ExtentTest extentTest;
+
+    [OneTimeSetUp]
+    public void initReport()
+    {
+        string workingDirectory = Environment.CurrentDirectory;
+        string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+        String reportPath = projectDirectory + "//automationreport.html";
+
+        extentReport = new ExtentReports();
+        extentReport.AttachReporter(new ExtentSparkReporter(reportPath));
+
+    }
+
     [SetUp]
     public void setUp() {
+
+        extentTest = extentReport.CreateTest(TestContext.CurrentContext.Test.Name);
+
         String value = TestContext.Parameters["runLocal"];
         if (value != null)
         {
@@ -53,17 +73,45 @@ public class HeroKuAppTest
         driver.Url = "https://the-internet.herokuapp.com/";
         welcomePage = new WelcomePage(driver);
         Assert.IsTrue(welcomePage.isPageLoaded(),"");
+        extentTest.Log(Status.Info, "Applica", getScreenShot());
         Assert.IsTrue(welcomePage.isAddRemoveElementsAvailable(),"");
         Assert.IsTrue(welcomePage.isAddRemoveElementsAccessible());
+        extentTest.Log(Status.Pass, "Applica", getScreenShot());
         addRemoveElementsPage = new AddRemoveElementsPage(driver);
         Assert.IsTrue(addRemoveElementsPage.isAddElementButtonAccessible(5));
+        extentTest.Log(Status.Pass, "Applica", getScreenShot());
         Assert.IsTrue(addRemoveElementsPage.isAllAddedButtonsAvailable(5),"");
 
     }
 
-    [TearDown]
-    public void tearDown()
+    public AventStack.ExtentReports.Model.Media getScreenShot()
     {
+        DateTime time = DateTime.Now;
+        string fileName = "Screenshot_" + time.ToString("h_mm_ss") + ".png";
+        ITakesScreenshot ts = (ITakesScreenshot)driver;
+        var shot = ts.GetScreenshot().AsBase64EncodedString;
+        return MediaEntityBuilder.CreateScreenCaptureFromBase64String(shot, fileName).Build();
+       
+    }
+
+    [TearDown]
+    public void cleanUp()
+    {
+        var status = TestContext.CurrentContext.Result.Outcome.Status;
+        if (status == NUnit.Framework.Interfaces.TestStatus.Passed)
+        {
+            extentTest.Pass("Test Passed", getScreenShot());
+
+        }
+        else if (status == NUnit.Framework.Interfaces.TestStatus.Failed)
+        {
+            extentTest.Pass("Test Failed", getScreenShot());
+        }
+        else
+        {
+            extentTest.Skip("Test Skipped");
+        }
+        extentReport.Flush();
         driver.Quit();
     }
 }

@@ -9,20 +9,25 @@ jobs:
   build:
    runs-on: ubuntu-latest
    steps:
-    - name: Checkout code 
+    - name: Checkout 
       uses: actions/checkout@v3
 
-    - name: setup 
+    - name: CodeSetup 
       uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '6.0.x' 
 
-    - name: Restore dependencies
+    - name: Dependencies
       run: dotnet restore
 
     - name: Build
       run: dotnet build -c Release --no-restore
 
-    - name: Automated Tests
+    - name: Test
       run: dotnet test -c Release --no-build
     
+    - name: Automation Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: AutomationTestReport
+        path: automationreport.html
