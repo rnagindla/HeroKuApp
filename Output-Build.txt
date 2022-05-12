@@ -1,2 +1,10 @@
 ﻿Build started...
-========== Build: 0 succeeded, 0 failed, 1 up-to-date, 0 skipped ==========
+1>------ Build started: Project: HeroKuApp, Configuration: Debug Any CPU ------
+1>Skipping analyzers to speed up the build. You can execute 'Build' or 'Rebuild' command to run analyzers.
+1>D:\VisualStudio\source\repos\HeroKuApp\page\WelcomePage.cs(22,25,22,44): warning CS0649: Field 'WelcomePage.addRemovePageHeader' is never assigned to, and will always have its default value null
+1>D:\VisualStudio\source\repos\HeroKuApp\page\WelcomePage.cs(18,25,18,42): warning CS0649: Field 'WelcomePage.addRemoveElements' is never assigned to, and will always have its default value null
+1>D:\VisualStudio\source\repos\HeroKuApp\page\WelcomePage.cs(20,25,20,31): warning CS0649: Field 'WelcomePage.header' is never assigned to, and will always have its default value null
+1>D:\VisualStudio\source\repos\HeroKuApp\page\AddRemoveElementsPage.cs(18,25,18,35): warning CS0649: Field 'AddRemoveElementsPage.addElement' is never assigned to, and will always have its default value null
+1>HeroKuApp -> D:\VisualStudio\source\repos\HeroKuApp\bin\Debug\net6.0\HeroKuApp.dll
+1>Done building project "HeroKuApp.csproj".
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========

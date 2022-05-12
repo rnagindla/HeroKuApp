@@ -17,7 +17,7 @@ public class HeroKuAppTest
     private IWebDriver driver;
     private WelcomePage welcomePage;
     private AddRemoveElementsPage addRemoveElementsPage;
-    private Boolean runLocal;
+    private bool runLocal;
     private ExtentReports extentReport;
     private ExtentTest extentTest;
 
@@ -41,7 +41,7 @@ public class HeroKuAppTest
         String value = TestContext.Parameters["runLocal"];
         if (value != null)
         {
-            runLocal = Boolean.Parse(value);
+            runLocal = bool.Parse(value);
         }
         if (runLocal)
         {
@@ -72,15 +72,16 @@ public class HeroKuAppTest
     {
         driver.Url = "https://the-internet.herokuapp.com/";
         welcomePage = new WelcomePage(driver);
-        Assert.IsTrue(welcomePage.isPageLoaded(),"");
-        extentTest.Log(Status.Info, "Applica", getScreenShot());
-        Assert.IsTrue(welcomePage.isAddRemoveElementsAvailable(),"");
-        Assert.IsTrue(welcomePage.isAddRemoveElementsAccessible());
-        extentTest.Log(Status.Pass, "Applica", getScreenShot());
+        Assert.IsTrue(welcomePage.isPageLoaded(), "Welcome to the-internet page not loaded");
+        extentTest.Log(Status.Info, "Welcome to the-internet page", getScreenShot());
+        Assert.IsTrue(welcomePage.isAddRemoveElementsAvailable(), "Add/Remove Elements link not available");
+        Assert.IsTrue(welcomePage.isAddRemoveElementsAccessible(), "Unable to access Add/Remove Elements page");
+        extentTest.Log(Status.Pass, "Add/Remove Elements page", getScreenShot());
         addRemoveElementsPage = new AddRemoveElementsPage(driver);
-        Assert.IsTrue(addRemoveElementsPage.isAddElementButtonAccessible(5));
-        extentTest.Log(Status.Pass, "Applica", getScreenShot());
-        Assert.IsTrue(addRemoveElementsPage.isAllAddedButtonsAvailable(5),"");
+        Assert.IsTrue(addRemoveElementsPage.isAddElementButtonAccessible(5),"Unable to add new Elements");
+        extentTest.Log(Status.Pass, "Add/Remove Elements page: Adding new Elements", getScreenShot());
+        Assert.IsTrue(addRemoveElementsPage.isAllAddedButtonsAvailable(5), "Unable to validate new Elements availability");
+        extentTest.Log(Status.Pass, "New elements availability check");
 
     }
 
@@ -100,16 +101,16 @@ public class HeroKuAppTest
         var status = TestContext.CurrentContext.Result.Outcome.Status;
         if (status == NUnit.Framework.Interfaces.TestStatus.Passed)
         {
-            extentTest.Pass("Test Passed", getScreenShot());
+            extentTest.Pass("Test execution: Passed", getScreenShot());
 
         }
         else if (status == NUnit.Framework.Interfaces.TestStatus.Failed)
         {
-            extentTest.Pass("Test Failed", getScreenShot());
+            extentTest.Pass("Test execution: Failed", getScreenShot());
         }
         else
         {
-            extentTest.Skip("Test Skipped");
+            extentTest.Skip("Test execution: Skipped");
         }
         extentReport.Flush();
         driver.Quit();
