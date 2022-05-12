@@ -15,9 +15,14 @@ public class HeroKuAppTest
     private IWebDriver driver;
     private WelcomePage welcomePage;
     private AddRemoveElementsPage addRemoveElementsPage;
-    private Boolean runLocal = false;
+    private Boolean runLocal;
     [SetUp]
     public void setUp() {
+        String value = TestContext.Parameters["runLocal"];
+        if (value != null)
+        {
+            runLocal = Boolean.Parse(value);
+        }
         if (runLocal)
         {
             driver = new ChromeDriver();
@@ -47,12 +52,12 @@ public class HeroKuAppTest
     {
         driver.Url = "https://the-internet.herokuapp.com/";
         welcomePage = new WelcomePage(driver);
-        Assert.IsTrue(welcomePage.isPageLoaded());
-        Assert.IsTrue(welcomePage.isAddRemoveElementsAvailable());
+        Assert.IsTrue(welcomePage.isPageLoaded(),"");
+        Assert.IsTrue(welcomePage.isAddRemoveElementsAvailable(),"");
         Assert.IsTrue(welcomePage.isAddRemoveElementsAccessible());
         addRemoveElementsPage = new AddRemoveElementsPage(driver);
         Assert.IsTrue(addRemoveElementsPage.isAddElementButtonAccessible(5));
-        Assert.IsTrue(addRemoveElementsPage.isAllAddedButtonsAvailable(5));
+        Assert.IsTrue(addRemoveElementsPage.isAllAddedButtonsAvailable(5),"");
 
     }
 

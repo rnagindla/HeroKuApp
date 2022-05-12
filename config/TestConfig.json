@@ -1,0 +1,8 @@
+﻿{
+  "profiles": {
+    "HeroKuApp": {
+      "commandName": "Project",
+      "commandLineArgs": "-- TestRunParameters.Parameter(name=\\\"runLocal\\\",value=\\\"true\\\")"
+    }
+  }
+}
