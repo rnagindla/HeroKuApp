@@ -25,19 +25,18 @@ public class HeroKuAppTest
         else
         {
            
-            var sauceOptions = new Dictionary<string, object>
-            {
-                  ["name"] = TestContext.CurrentContext.Test.Name
-            };
+        var sauceOptions = new Dictionary<string, object>
+        {
+             ["name"] = TestContext.CurrentContext.Test.Name
+        };
 
-                var chromeOptions = new ChromeOptions
-                {
-                    BrowserVersion = "latest",
-                    PlatformName = "Windows 10"
-                };
-                chromeOptions.AddAdditionalOption("sauce:options", sauceOptions);
-                driver = new RemoteWebDriver(new Uri("https://oauth-ramesh.be231-1b284:df659765-3082-4b4a-9c30-1f100ae5fad7@ondemand.us-west-1.saucelabs.com:443/wd/hub"), chromeOptions.ToCapabilities(), TimeSpan.FromSeconds(30));
-            
+        var chromeOptions = new ChromeOptions
+        {
+             BrowserVersion = "latest",
+             PlatformName = "Windows 10"
+        };
+             chromeOptions.AddAdditionalOption("sauce:options", sauceOptions);
+             driver = new RemoteWebDriver(new Uri("https://oauth-ramesh.be231-1b284:df659765-3082-4b4a-9c30-1f100ae5fad7@ondemand.us-west-1.saucelabs.com:443/wd/hub"), chromeOptions.ToCapabilities(), TimeSpan.FromSeconds(30));  
         }
         driver.Manage().Window.Maximize();
         driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
