@@ -23,4 +23,8 @@
     <PackageReference Include="WebDriverManager" Version="2.12.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".github\workflows\CI-CD.yml" />
+  </ItemGroup>
+
 </Project>
